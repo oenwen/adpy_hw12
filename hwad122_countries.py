@@ -1,7 +1,7 @@
 import json
 import requests
-import sys
 import hashlib
+
 
 class WikiCountries:
 
@@ -21,22 +21,18 @@ class WikiCountries:
             'format': 'json',
             'action': 'opensearch'
         }
-
         try:
             country_name = self.countries[self.i]['name']['common']
         except IndexError:
             raise StopIteration
-
         params['search'] = country_name
         response = requests.get(URL_API, params)
-        url = response.json()[3][0]
-        print(self.i)
+        url = response.json()[3][0]        
         return {country_name: url}
 
 
 def get_md5(path1):
     m = hashlib.md5()
-
     with open(path1) as file:
         file_json = json.load(file)
         for key in file_json:
